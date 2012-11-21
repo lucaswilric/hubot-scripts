@@ -64,6 +64,8 @@ getYouTubeVideoIdFrom = (videoUrl) ->
   if /^youtu.be$/.test uri.host
     return uri.path.replace '/', ''
 
+playVimeo = (videoId) ->
+  xbmcRequest "Player.Open", {"item":{"file":"plugin://plugin.video.vimeo/?action=play_video&videoid="+videoId}}, msg
 
 module.exports = (robot) ->  
   robot.respond /xbmc (\S*youtu\.?be\S*)/i, (msg) ->
@@ -74,6 +76,9 @@ module.exports = (robot) ->
         return
     msg.reply "That doesn't look like something I can tell XBMC to play. Sorry :("
   
+  robot.respond /xbmc \S*vimeo.com\S*\/(\d+)/i, (msg) ->
+    playVimeo msg.match[1]
+
   robot.respond /xbmc stop/i, (msg) ->
     xbmcStop(msg)
   
