@@ -1,5 +1,5 @@
 # Description:
-#   Plays YouTube videos on XBMC
+#   Plays YouTube & Vimeo videos on XBMC
 #
 # Dependencies:
 #   None
@@ -10,15 +10,16 @@
 #   HUBOT_XBMC_PASSWORD
 #
 # Commands:
-#   hubot xbmc <youtube url> - Plays the video at <youtube url>
+#   hubot xbmc <url> - Plays the video at <url>
 #   hubot where is xbmc? - Displays HUBOT_XBMC_URL
 #
 # Notes:
 #   Requirements:
-#   * XBMC with the YouTube plugin v3.1.0 or greater installed.
+#   * XBMC Eden or Frodo
+#   * YouTube plugin >= v3.1.0, and/or Vimeo plugin >= 2.5.1. Untested with older versions.
 #   * Allow remote control of your XBMC via HTTP.
 #   
-#   Tested with XBMC Eden. Should work with versions that have the JSON-RPC API.
+#   Tested with XBMC Eden & Frodo. Should work with versions that have the JSON-RPC API.
 #
 # Author:
 #   lucaswilric
@@ -82,5 +83,5 @@ module.exports = (robot) ->
   robot.respond /xbmc stop/i, (msg) ->
     xbmcStop(msg)
   
-  robot.respond /where('s| is) xbmc\??/i, (msg) ->
-    msg.send 'XBMC is at ' + process.env.HUBOT_XBMC_URL
+  robot.respond /where('s| is|s) xbmc\??/i, (msg) ->
+    msg.send 'XBMC is at ' + xbmcUri
